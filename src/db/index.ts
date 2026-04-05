@@ -26,7 +26,7 @@ const USER:string=process.env.DB_USER;
 const PASSWORD:string=process.env.DB_PASSWORD;
 const DBNAME:string=process.env.DB_NAME;
 
-const pool = new Pool({
+export const pool = new Pool({
   host:HOST,
   user:USER,
   password:PASSWORD,
@@ -37,14 +37,14 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000,
 });
 
-try{
-const client = await pool.connect();
-client.release();
-console.log("DB connection SUCCESS");
-}
-catch(err){
-    throw new Error("DB connection Fails");
-}
 
-
-export default pool;
+export async function connectDB() {
+  try {
+    const client = await pool.connect()
+    client.release()
+    console.log("DB connection SUCCESS")
+  } catch(err) {
+    console.error("DB connection Fails:", err)
+    throw new Error("DB connection Fails")
+  }
+}
