@@ -18,7 +18,7 @@ When a request hits a route, it follows this execution path:
       * ➔ **Service** (Returns result)
     * ➔ **Controller** (Sends response)
 
----
+
 
 ## 🗄️ Database Schema
 
@@ -65,11 +65,6 @@ When a request hits a route, it follows this execution path:
 * `status`
 * `created_at`
 
-### 🔗 Relationships
-* `concerts.created_by` ➔ `users.user_id`
-* `bookings.concert_id` ➔ `concerts.concert_id`
-
----
 
 ## 🌐 API Endpoints
 
