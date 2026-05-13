@@ -48,3 +48,11 @@ CREATE TABLE IF NOT EXISTS payments (
   status      payment_status NOT NULL DEFAULT 'pending',
   created_at  TIMESTAMP DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+  id          SERIAL PRIMARY KEY,
+  user_id     INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  token_hash  VARCHAR(255) NOT NULL,
+  expires_at  TIMESTAMP NOT NULL,
+  created_at  TIMESTAMP DEFAULT NOW()
+);

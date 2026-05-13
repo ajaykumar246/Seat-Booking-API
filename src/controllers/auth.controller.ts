@@ -18,15 +18,16 @@ export async function login(req:Request,res:Response) {
     try{
         console.log("login");
         const {email,password} =req.body;
-        const token:string=await loginUser(email,password);
+        const {accessToken,refreshToken}=await loginUser(email,password);
         res.status(200)
-        .cookie('token', token, {
+        .cookie('refresh', refreshToken, {
             httpOnly: true,   // JS cannot access this cookie
             secure: false,     // only sent over HTTPS
             sameSite: 'strict', // CSRF protection
-            maxAge: 7 * 24 * 60 * 60 * 1000  // 7 days in milliseconds
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            path:"/api/auth/refresh"
         })
-        .json({message:"Login Successfull"});
+        .json({accessToken: accessToken,message:"Login Successfull"});
     }
     catch(err){
         if(err instanceof Error && err.message === "User not found") {
